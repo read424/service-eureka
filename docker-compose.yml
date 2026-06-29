@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  eureka:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: service-eureka
+    ports:
+      - "8761:8761"
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:}
+      JAVA_OPTS: -Xmx256m -Xms128m
+    networks:
+      - bootcamp-network
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+networks:
+  bootcamp-network:
+    driver: bridge
